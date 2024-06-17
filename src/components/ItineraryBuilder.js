@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Typography, Grid, TextField, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const Root = styled('div')(({ theme }) => ({
+  padding: theme.spacing(3),
+}));
 
 const ItineraryBuilder = ({ userId }) => {
   const [itinerary, setItinerary] = useState(null);
@@ -35,24 +41,37 @@ const ItineraryBuilder = ({ userId }) => {
   // ... other handlers for updating and deleting activities
 
   return (
-    <div>
-      <h2>Itinerary Builder</h2>
+    <Root>
+      <Typography variant="h4" gutterBottom>
+        Itinerary Builder
+      </Typography>
       {itinerary && (
         <div>
-          <h3>Activities</h3>
-          <ul>
+          <Typography variant="h6" gutterBottom>
+            Activities
+          </Typography>
+          <Grid container spacing={2}>
             {activities.map((activity) => (
-              <li key={activity.id}>
-                {activity.name} ({activity.start_time} - {activity.end_time})
-              </li>
+              <Grid item xs={12} key={activity.id}>
+                <TextField
+                  label={`${activity.name} (${activity.start_time} - ${activity.end_time})`}
+                  value={`${activity.name} (${activity.start_time} - ${activity.end_time})`}
+                  fullWidth
+                  disabled
+                />
+              </Grid>
             ))}
-          </ul>
-          <button onClick={() => addActivity({ name: 'New Activity', start_time: '', end_time: '' })}>
+          </Grid>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => addActivity({ name: 'New Activity', start_time: '', end_time: '' })}
+          >
             Add Activity
-          </button>
+          </Button>
         </div>
       )}
-    </div>
+    </Root>
   );
 };
 
