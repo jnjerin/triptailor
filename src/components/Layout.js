@@ -1,25 +1,57 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { styled } from '@mui/material/styles';
+
+const drawerWidth = 240;
+
+const Root = styled('div')(({ theme }) => ({
+  display: 'flex',
+}));
+
+const AppBarWrapper = styled(AppBar)(({ theme }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+}));
+
+const DrawerWrapper = styled(Drawer)(({ theme }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  '& .MuiDrawer-paper': {
+    width: drawerWidth,
+    boxSizing: 'border-box',
+  },
+}));
 
 const Layout = ({ children }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
   return (
-    <div>
-      <AppBar position="static">
+    <Root>
+      <AppBarWrapper position="fixed">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={toggleDrawer}
+          >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6">Triptailor</Typography>
+          <Typography variant="h6" noWrap>
+            Triptailor
+          </Typography>
         </Toolbar>
-      </AppBar>
-      <Drawer open={isDrawerOpen} onClose={toggleDrawer}>
+      </AppBarWrapper>
+      <DrawerWrapper
+        variant="persistent"
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={toggleDrawer}
+      >
         <List>
           <ListItem button>
             <ListItemText primary="Home" />
@@ -31,9 +63,9 @@ const Layout = ({ children }) => {
             <ListItemText primary="Reviews" />
           </ListItem>
         </List>
-      </Drawer>
-      <main>{children}</main>
-    </div>
+      </DrawerWrapper>
+      <main style={{ flexGrow: 1, padding: '80px 20px' }}>{children}</main>
+    </Root>
   );
 };
 
