@@ -1,13 +1,16 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#3f51b5', // Change this to your desired primary color
+      main: '#1976d2',
     },
     secondary: {
-      main: '#f50057', // Change this to your desired secondary color
+      main: '#dc004e',
     },
+  },
+  typography: {
+    fontFamily: 'Roboto, Arial, sans-serif',
   },
 });
 
